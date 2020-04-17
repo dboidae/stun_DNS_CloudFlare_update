@@ -1,0 +1,68 @@
+#!Serverless
+#
+service: DNSStunUpdateService
+
+provider:
+  name: aws
+  runtime: python3.6
+  memorySize: 128
+  stackTags:
+    "d:team": "d.sonko@gmail.com"
+    "d::vpc": "my-private"
+    "d:service": "voip-stun"
+  region: us-east-1
+  stage: A
+
+package:
+#  include:
+#    - include-me.py
+  exclude:
+    - README.md
+    - requirements.txt
+    - requirements/**
+    - l-start.py
+    - environment.sh
+    - environment.yml
+    - environment.sh-example
+    - environment.yml-example
+    - start.sh
+    - deploy.sh
+
+functions:
+  DNSStunUpdateService:
+    handler: STDNS.lambda_handler
+    description: "The function updates IPs in CLoudFlare DNS stun record"
+    memorySize: 128
+    timeout: 300
+    role: DNSStunUpdateService
+    environment: ${file(./environment.yml):SL}
+    events:
+      - schedule: cron(1/5 * * * ? *)
+resources:
+  Description: 'The AWS CloudFormation Serverless template'
+  Resources:
+    DNSStunUpdateService:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: /service/
+        RoleName: DNSStunUpdateService
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: DNSStunUpdateService
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - "logs:CreateLogGroup"
+                    - "logs:CreateLogStream"
+                    - "logs:PutLogEvents"
+                  Resource: "*"
+

@@ -1,0 +1,9 @@
+SL:
+        EXEC_log_level: warning
+        EXEC_environment: ${env:AWS_PROFILE}
+        EXEC_stun_destination: stun._my_.com
+        EXEC_stun_source: stun.counterpath.com,stun.zoiper.com,stun.pjsip.org,stun.stunprotocol.org,stun.t-online.de,stun.acrobits.cz,stun.twt.it,stun.webcalldirect.com,stun.1und1.de,stun.barracuda.com
+        EXEC_stun_source_attempt: 5
+        EXEC_CF_API_token: my_token
+        EXEC_CF_zone_ID: my_zone_id
+        EXEC_CF_zone_update_dry_run: yes
