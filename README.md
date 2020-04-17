@@ -1,7 +1,7 @@
-Stun DNS update script
+Stun DNS records update script
 =======
-(lamdba function)/(stand alone script) for updateting CloudFlare DNS records for stun service 
-it seems more prototype then real solution, anyway you may try use it for own risk. I wouldn't recommend run it (by cron) more often than "2 * your_DNS_record_TTL".
+(AWS lambda function)/(stand-alone script) for updating CloudFlare DNS records for stun service. 
+It seems more prototype then real solution, anyway you may try to use it for own risk. I wouldn't recommend run it (by cron) more often than "2 * your_DNS_record_TTL".
 
 Local Installation
 -
